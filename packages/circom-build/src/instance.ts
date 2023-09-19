@@ -17,11 +17,11 @@ export class Instance {
             this.public_inputs.length > 0 ? `{public [${public_inputs_string}] }` : ""
         
         return `
-            pragma circom ${this.pragma}
+            pragma circom ${this.pragma};
 
-            include "${this.template_file}"
+            include "${this.template_file}";
 
-            component main ${public_inputs_declaration} = ${this.template_name}(${params_string})
+            component main ${public_inputs_declaration} = ${this.template_name}(${params_string});
         `;
     }
 

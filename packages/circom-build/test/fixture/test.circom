@@ -31,5 +31,3 @@ template Test() {
         inArray[9] * inArray[9]
     ];
 }
-
-component main = Test();

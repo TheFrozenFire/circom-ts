@@ -2,6 +2,7 @@ import { assert } from "chai";
 import {
     WasmWrapper,
     WitnessCalculator,
+    WitnessInputs,
     SymbolReader,
     WitnessAccessor } from "../src/index.js"
 
@@ -19,14 +20,14 @@ describe("Symbol Access", async () => {
         const symbols = await symbolReader.readSymbolMap()
 
         const calculator = new WitnessCalculator(wasm)
-        calculator.calculate(WitnessCalculator.flattenInputs({
+        await calculator.calculate(WitnessCalculator.flattenInputs({
             "in": 10,
             "inArray": [...Array(10).keys()],
         }))
 
         const accessor = new WitnessAccessor(calculator, symbols)
 
-        assert.equal(accessor.value("main.out"), BigInt(100))
+        assert.equal(accessor.value("main.out"), 100n)
         assert.deepEqual(accessor.array("main.outArray"), [...Array(10).keys()].map((i) => BigInt(i * i)))
     })
 })

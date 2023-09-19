@@ -3,20 +3,21 @@ import path from "path"
 import { Instance } from "./instance.js"
 
 export type CircomOptions = {
-    r1cs: boolean,
-    sym: boolean,
-    wasm: boolean,
-    json: boolean,
-    wat: boolean,
-    c: boolean,
-    optimize: number,
-    optimize2_round: number,
-    verbose: boolean,
-    inspect: boolean,
-    use_old_simplification_heuristics: boolean,
     output: string,
-    prime: string,
-    libraries: string[],
+    
+    r1cs?: boolean,
+    sym?: boolean,
+    wasm?: boolean,
+    json?: boolean,
+    wat?: boolean,
+    c?: boolean,
+    optimize?: number,
+    optimize2_round?: number,
+    verbose?: boolean,
+    inspect?: boolean,
+    use_old_simplification_heuristics?: boolean,
+    prime?: string,
+    libraries?: string[],
 }
 
 export class CircomCommand {
@@ -26,7 +27,7 @@ export class CircomCommand {
 
     constructor(
         public _input: string | Instance,
-        public options?: CircomOptions
+        public options: CircomOptions
     ) {
         this.input = typeof _input === "string" ? _input : _input.temp_file.path
     }
@@ -50,60 +51,62 @@ export class CircomCommand {
     get command_flags(): string[] {
         let flags = [];
 
-        if (this.options.r1cs) {
-            flags.push("--r1cs");
-        }
+        if(this.options !== undefined) {
+            if (this.options.r1cs) {
+                flags.push("--r1cs");
+            }
 
-        if (this.options.sym) {
-            flags.push("--sym");
-        }
+            if (this.options.sym) {
+                flags.push("--sym");
+            }
 
-        if (this.options.wasm) {
-            flags.push("--wasm");
-        }
+            if (this.options.wasm) {
+                flags.push("--wasm");
+            }
 
-        if (this.options.json) {
-            flags.push("--json");
-        }
+            if (this.options.json) {
+                flags.push("--json");
+            }
 
-        if (this.options.wat) {
-            flags.push("--wat");
-        }
+            if (this.options.wat) {
+                flags.push("--wat");
+            }
 
-        if (this.options.c) {
-            flags.push("--c");
-        }
+            if (this.options.c) {
+                flags.push("--c");
+            }
 
-        if (this.options.optimize) {
-            flags.push(`--O${this.options.optimize}`);
-        }
+            if (this.options.optimize) {
+                flags.push(`--O${this.options.optimize}`);
+            }
 
-        if (this.options.optimize2_round) {
-            flags.push(`--O2round ${this.options.optimize2_round}`);
-        }
+            if (this.options.optimize2_round) {
+                flags.push(`--O2round ${this.options.optimize2_round}`);
+            }
 
-        if (this.options.verbose) {
-            flags.push("--verbose");
-        }
+            if (this.options.verbose) {
+                flags.push("--verbose");
+            }
 
-        if (this.options.inspect) {
-            flags.push("--inspect");
-        }
+            if (this.options.inspect) {
+                flags.push("--inspect");
+            }
 
-        if (this.options.use_old_simplification_heuristics) {
-            flags.push("--use_old_simplification_heuristics");
-        }
+            if (this.options.use_old_simplification_heuristics) {
+                flags.push("--use_old_simplification_heuristics");
+            }
 
-        if (this.options.output) {
-            flags.push(`--output ${this.options.output}`);
-        }
+            if (this.options.output) {
+                flags.push(`--output ${this.options.output}`);
+            }
 
-        if (this.options.prime) {
-            flags.push(`--prime ${this.options.prime}`);
-        }
+            if (this.options.prime) {
+                flags.push(`--prime ${this.options.prime}`);
+            }
 
-        for(const library of this.options.libraries) {
-            flags.push(`-l ${library}`);
+            for(const library of this.options.libraries) {
+                flags.push(`-l ${library}`);
+            }
         }
 
         return flags;

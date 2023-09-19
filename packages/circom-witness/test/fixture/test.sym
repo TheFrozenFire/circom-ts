@@ -21,7 +21,7 @@
 21,21,1,main.inArray[7]
 22,22,1,main.inArray[8]
 23,23,1,main.inArray[9]
-24,24,0,main.SubComponent_19_297.out
-25,25,0,main.SubComponent_19_297.in
-26,26,0,main.sub.out
-27,27,0,main.sub.in
+24,-1,0,main.SubComponent_19_301.out
+25,-1,0,main.SubComponent_19_301.in
+26,-1,0,main.sub.out
+27,-1,0,main.sub.in

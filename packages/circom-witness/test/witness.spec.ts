@@ -11,7 +11,7 @@ describe("Witness Execution", async () => {
         await wasm.init()
 
         const calculator = new WitnessCalculator(wasm)
-        calculator.calculate(WitnessCalculator.flattenInputs({
+        await calculator.calculate(WitnessCalculator.flattenInputs({
             "in": 10,
             "inArray": [...Array(10).keys()],
         }))

@@ -17,7 +17,7 @@ describe("WASM Execution", async () => {
         // Why? This doesn't look like the bn128 prime
         assert.equal(wasm.prime, BigInt('21888242844879328548818664213742077600362041385367538672338993241347936223233'))
 
-        assert.equal(wasm.witnessSize, 28)
+        assert.equal(wasm.witnessSize, 24)
         assert.equal(wasm.inputSize, 11)
     })
 })
