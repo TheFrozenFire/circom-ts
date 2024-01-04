@@ -14,8 +14,7 @@ describe("WASM Execution", async () => {
         assert.equal(wasm.minorVersion, 1)
         assert.equal(wasm.patchVersion, 5)
 
-        // Why? This doesn't look like the bn128 prime
-        assert.equal(wasm.prime, BigInt('21888242844879328548818664213742077600362041385367538672338993241347936223233'))
+        assert.equal(wasm.prime, BigInt('21888242871839275222246405745257275088548364400416034343698204186575808495617'))
 
         assert.equal(wasm.witnessSize, 24)
         assert.equal(wasm.inputSize, 11)

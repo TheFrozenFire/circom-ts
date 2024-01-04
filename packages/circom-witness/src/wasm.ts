@@ -130,10 +130,11 @@ export class WasmWrapper {
         const arr = new Array(this.fieldElementUint32Size)
 
         for(let i = 0; i < this.fieldElementUint32Size; i++) {
-            arr[this.fieldElementUint32Size - 1 - i] = this.instance.exports.readSharedRWMemory(i)
+            // Coerce to unsigned
+            arr[this.fieldElementUint32Size - 1 - i] = this.instance.exports.readSharedRWMemory(i) >>> 0
         }
 
-        return arr.reduce((acc, val) => { return acc * BigInt(2**32) + BigInt(val) }, BigInt(0))
+        return arr.reduce((acc, val) => { return (acc * BigInt(2**32)) + BigInt(val) }, BigInt(0))
     }
 
     writeFieldElement(value: bigint): void {
