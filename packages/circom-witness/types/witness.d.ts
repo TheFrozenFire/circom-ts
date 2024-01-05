@@ -19,6 +19,7 @@ export declare class WitnessAccessor {
     protected witness: WitnessCalculator;
     protected symbols: SymbolMap;
     constructor(witness: WitnessCalculator, symbols: SymbolMap);
+    toArray(): bigint[];
     varIndex(name: string): number;
     varMatch(pattern: string | RegExp): string[];
     value(name: string): bigint;

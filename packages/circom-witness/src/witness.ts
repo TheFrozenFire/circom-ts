@@ -75,6 +75,10 @@ export class WitnessAccessor {
         protected symbols: SymbolMap,
     ) { }
 
+    toArray() {
+        return this.witness.witness
+    }
+
     varIndex(name: string): number {
         return this.symbols[name].varIndex
     }

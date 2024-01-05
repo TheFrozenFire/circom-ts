@@ -2,7 +2,7 @@ export declare const ERROR_MESSAGES: Readonly<{
     1: "Signal not found";
     2: "Too many signals";
     3: "Signal already set";
-    4: "Assert failed";
+    4: "Assert Failed";
     5: "Not enough memory";
     6: "Input signal array access exceeds the size";
 }>;
