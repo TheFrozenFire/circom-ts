@@ -107,9 +107,7 @@ export class WitnessAccessor {
     }
 
     array(name: string): bigint[] {
-        return Object.entries(this.symbols)
-        .filter(([index, symbol]) => index.startsWith(`${name}[`))
-        .map(([index, symbol]) => this.witness.witnessAt(symbol.varIndex))
+        return this.map(`${name}[`).map((signal) => signal.value)
     }
 
     match(pattern: string | RegExp): bigint[] {
