@@ -33,7 +33,7 @@ export declare class WasmWrapper {
     protected instance: CircomWasmInstance;
     protected errorAccumulator: string[];
     protected messageAccumulator: string[];
-    protected fieldElementUint32Size: number;
+    fieldElementUint32Size: number;
     constructor(code: Uint8Array | Promise<Uint8Array>, memory?: WebAssembly.Memory, logger?: (message: string[]) => void);
     static signalNameHash(name: string): [number, number];
     init(sanityCheck?: boolean): Promise<void>;

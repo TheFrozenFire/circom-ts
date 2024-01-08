@@ -35,7 +35,7 @@ export class WasmWrapper {
     protected messageAccumulator: string[] = []
 
     // Size of the field element in 32-bit words
-    protected fieldElementUint32Size: number
+    public fieldElementUint32Size: number
 
     constructor(
         protected code: Uint8Array | Promise<Uint8Array>,
@@ -127,7 +127,7 @@ export class WasmWrapper {
     }
 
     readFieldElement(): bigint {
-        const arr = new Array(this.fieldElementUint32Size)
+        const arr = new Uint32Array(this.fieldElementUint32Size)
 
         for(let i = 0; i < this.fieldElementUint32Size; i++) {
             // Coerce to unsigned

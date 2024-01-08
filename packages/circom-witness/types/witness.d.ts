@@ -12,6 +12,7 @@ export declare class WitnessCalculator {
     static flattenInputs(inputs: object): WitnessInputs;
     calculate(inputs: WitnessInputs, sanityCheck?: boolean): Promise<void>;
     get witness(): bigint[];
+    get witnessBin(): Uint8Array;
     witnessAt(index: number): bigint;
     writeInputs(inputs: WitnessInputs): void;
 }
@@ -20,6 +21,7 @@ export declare class WitnessAccessor {
     protected symbols: SymbolMap;
     constructor(witness: WitnessCalculator, symbols: SymbolMap);
     toArray(): bigint[];
+    toBin(): Uint8Array;
     varIndex(name: string): number;
     varMatch(pattern: string | RegExp): string[];
     value(name: string): bigint;
