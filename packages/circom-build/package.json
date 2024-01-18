@@ -1,5 +1,5 @@
 {
-    "name": "@thefrozenfire/circom-build",
+    "name": "@frozenfire/circom-build",
     "version": "0.0.1",
     "type": "module",
     "exports": {

@@ -1,6 +1,6 @@
 {
-  "name": "@thefrozenfire/circom-ts",
-  "private": true,
+  "name": "@frozenfire/circom-ts",
+  "private": false,
   "workspaces": [
     "packages/*"
   ],
