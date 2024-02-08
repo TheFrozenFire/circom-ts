@@ -8,6 +8,7 @@ export class Instance {
         public params: number[],
         public pragma: string = "2.0.0",
         public public_inputs: string[] = [],
+        public temp_dir?: string,
     ) {}
 
     get temp_file_contents() {
@@ -31,6 +32,7 @@ export class Instance {
         const temp_circuit = temp.openSync({
             prefix: this.template_name,
             suffix: ".circom",
+            dir: this.temp_dir,
         })
 
         fs.writeSync(
