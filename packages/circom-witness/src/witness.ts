@@ -181,7 +181,7 @@ export class Witness {
 
     constructor(
         protected code:  Uint8Array | Promise<Uint8Array>,
-        protected symbols: string
+        protected symbols: string | string[]
     ) {
         this.calculator = new WitnessCalculator(new WasmWrapper(code))
         this.accessor = new WitnessAccessor(this.calculator, (new SymbolReader(symbols).readSymbolMap()))
