@@ -1,5 +1,5 @@
 import { WasmWrapper } from "./wasm.js"
-import { Symbol, SymbolMap, SymbolReader } from "./symbols.js"
+import { Symbol, SymbolMap } from "./symbols.js"
 
 export type WitnessInputs = {
     [signalName: string]: Array<bigint>
@@ -181,10 +181,10 @@ export class Witness {
 
     constructor(
         protected code:  Uint8Array | Promise<Uint8Array>,
-        protected symbols: string | string[]
+        protected symbols: SymbolMap
     ) {
         this.calculator = new WitnessCalculator(new WasmWrapper(code))
-        this.accessor = new WitnessAccessor(this.calculator, (new SymbolReader(symbols).readSymbolMap()))
+        this.accessor = new WitnessAccessor(this.calculator, symbols)
     }
 
     async calculate(inputs: object, sanityCheck: boolean = false) {
