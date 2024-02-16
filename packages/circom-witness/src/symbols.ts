@@ -15,7 +15,7 @@ export class SymbolReader {
     ) {}
 
     *readSymbols(): Generator<Symbol> {
-        for (const line of Array.isArray(this.source) ? this.source : this.source.split("\n") ) {
+        for (const line of (Array.isArray(this.source) ? this.source : this.source.split("\n")) ) {
             const [labelIndex, varIndex, componentIndex, name] = line.split(",")
             yield {
                 name,

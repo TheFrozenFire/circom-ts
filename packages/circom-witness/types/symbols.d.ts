@@ -8,8 +8,8 @@ export type SymbolMap = {
     [name: string]: Symbol;
 };
 export declare class SymbolReader {
-    protected source: string;
-    constructor(source: string);
+    protected source: string | string[];
+    constructor(source: string | string[]);
     readSymbols(): Generator<Symbol>;
     readSymbolMap(): SymbolMap;
 }

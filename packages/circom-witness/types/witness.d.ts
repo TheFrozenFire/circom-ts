@@ -31,9 +31,9 @@ export declare class WitnessAccessor {
 }
 export declare class Witness {
     protected code: Uint8Array | Promise<Uint8Array>;
-    protected symbols: string;
+    protected symbols: SymbolMap;
     protected calculator: WitnessCalculator;
     protected accessor: WitnessAccessor;
-    constructor(code: Uint8Array | Promise<Uint8Array>, symbols: string);
+    constructor(code: Uint8Array | Promise<Uint8Array>, symbols: SymbolMap);
     calculate(inputs: object, sanityCheck?: boolean): Promise<WitnessAccessor>;
 }
