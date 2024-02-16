@@ -1,6 +1,3 @@
-import { ReadStream } from "fs"
-import { createInterface } from "readline"
-
 export type Symbol = {
     name: string,
     labelIndex: number,
@@ -14,11 +11,11 @@ export type SymbolMap = {
 
 export class SymbolReader {
     constructor(
-        protected source: string
+        protected source: string | string[]
     ) {}
 
     *readSymbols(): Generator<Symbol> {
-        for (const line of this.source.split("\n")) {
+        for (const line of Array.isArray(this.source) ? this.source : this.source.split("\n") ) {
             const [labelIndex, varIndex, componentIndex, name] = line.split(",")
             yield {
                 name,

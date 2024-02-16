@@ -7,6 +7,8 @@ import {
     WitnessAccessor } from "../src/index.js"
 
 import { readFile } from "fs/promises"
+import { createReadStream } from "fs"
+import { createInterface } from "readline";
 
 describe("Symbol Access", async () => {
     it("Read witness", async () => {
@@ -15,8 +17,11 @@ describe("Symbol Access", async () => {
 
         await wasm.init()
 
-        const symbolFile = (await readFile("test/fixture/test.sym")).toString()
-        const symbolReader = new SymbolReader(symbolFile)
+        let symbolLines: string[] = []
+        for await(const line of createInterface({ input: createReadStream("test/fixture/test.sym") })) {
+            symbolLines.push(line)
+        }
+        const symbolReader = new SymbolReader(symbolLines)
         const symbols = await symbolReader.readSymbolMap()
 
         const calculator = new WitnessCalculator(wasm)
