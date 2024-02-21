@@ -6,9 +6,12 @@ import * as fs from "fs"
 import {
     Instance,
     CircomCommand,
-    SnarkScheme,
     SnarkJSSetup
 } from "../src/index.js"
+
+import {
+    SnarkScheme
+} from "@frozenfire/circom-common"
 
 describe("Circuit Integration", async () => {
     it("Compile and Phase 1", async () => {
@@ -31,6 +34,17 @@ describe("Circuit Integration", async () => {
         assert.isTrue(fs.existsSync(command.paths.wasm))
 
         const setup = new SnarkJSSetup(command.paths.r1cs)
+
+        const r1cs_details = await setup.r1cs_details
+
+        console.table({
+            nVars: r1cs_details.nVars,
+            nOutputs: r1cs_details.nOutputs,
+            nPubInputs: r1cs_details.nPubInputs,
+            nPrvInputs: r1cs_details.nPrvInputs,
+            nLabels: r1cs_details.nLabels,
+            nConstraints: r1cs_details.nConstraints,
+        })
 
         await setup.phase1(SnarkScheme.Groth16, process.env.POWERS_OF_TAU_FILE as string)
 
