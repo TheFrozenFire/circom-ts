@@ -13,7 +13,8 @@
         "test": "NODE_NO_WARNINGS=1 mocha"
     },
     "dependencies": {
-        "snarkjs": "^0.6.11"
+        "snarkjs": "^0.6.11",
+        "@frozenfire/circom-common": "^0.5.0"
     },
     "devDependencies": {
         "@types/assert": "^1.5.6",
@@ -36,8 +37,6 @@
         "recursive": true,
         "exit": true
     },
-    "types": "dist/index.d.ts",
-    "module": "dist/esm/index.js",
     "files": [
         "dist"
     ]

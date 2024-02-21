@@ -12,7 +12,7 @@
       "skipLibCheck": true,
       "declaration": true,
       "paths": {
-        "@thefrozenfire/*": ["packages/*/src"]
+        "@frozenfire/*": ["packages/*"]
       }
     }
   }
