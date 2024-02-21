@@ -14,7 +14,8 @@
     },
     "dependencies": {
         "@frozenfire/circom-common": "^0.6.0",
-        "snarkjs": "^0.6.11"
+        "snarkjs": "^0.6.11",
+        "r1csfile": "^0.0.47"
     },
     "devDependencies": {
         "@types/assert": "^1.5.6",
