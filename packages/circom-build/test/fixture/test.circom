@@ -8,6 +8,7 @@ template SubComponent() {
 
 template Test() {
     signal input in;
+    signal input inMustBeOne;
 
     signal input inArray[10];
 
@@ -15,6 +16,9 @@ template Test() {
     sub.in <== in;
 
     signal output out <== sub.out;
+
+    assert(inMustBeOne == 1);
+    signal output outMustBeOne <== inMustBeOne * inMustBeOne;
 
     signal output outAnon <== SubComponent()(in);
 

@@ -1,30 +1,26 @@
 import { assert } from "chai";
-import { WasmWrapper, WitnessCalculator } from "../src/index.js"
+import { Witness, SymbolReader } from "../src/index.js"
 
 import { readFile } from "fs/promises"
 
 describe("Witness Execution", async () => {
     it("Read + write", async () => {
-        const file = await readFile("test/fixture/test.wasm")
-        const wasm = new WasmWrapper(file)
+        const wasmFile = await readFile("test/fixture/test.wasm")
+        const symbolsFile = await readFile("test/fixture/test.sym")
+        const symbols = (new SymbolReader(symbolsFile.toString()).readSymbolMap())
 
-        await wasm.init()
-
-        const calculator = new WitnessCalculator(wasm)
-        await calculator.calculate(WitnessCalculator.flattenInputs({
+        const calculator = new Witness(wasmFile, symbols)
+        const accessor = await calculator.calculate({
             "in": 10,
+            "inMustBeOne": 1,
             "inArray": [...Array(10).keys()],
-        }))
+        })
         
-        assert.equal(calculator.witnessAt(13), BigInt(10))
-        for(let i = 0; i < 10; i++) {
-            assert.equal(calculator.witnessAt(14 + i), BigInt(i))
-        }
+        assert.equal(accessor.value("main.in"), 10n)
+        assert.deepEqual(accessor.array("main.inArray"), [...Array(10).keys()].map((i) => BigInt(i)))
 
-        assert.equal(calculator.witnessAt(1), BigInt(100))
-        assert.equal(calculator.witnessAt(2), BigInt(100))
-        for(let i = 0; i < 10; i++) {
-            assert.equal(calculator.witnessAt(3 + i), BigInt(i * i))
-        }
+        assert.equal(accessor.value("main.out"), BigInt(100))
+        assert.equal(accessor.value("main.outAnon"), BigInt(100))
+        assert.deepEqual(accessor.array("main.outArray"), [...Array(10).keys()].map((i) => BigInt(i * i)))
     })
 })

@@ -27,6 +27,7 @@ describe("Symbol Access", async () => {
         const calculator = new WitnessCalculator(wasm)
         await calculator.calculate(WitnessCalculator.flattenInputs({
             "in": 10,
+            "inMustBeOne": 1,
             "inArray": [...Array(10).keys()],
         }))
 
