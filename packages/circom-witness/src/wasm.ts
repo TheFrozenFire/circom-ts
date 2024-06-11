@@ -31,14 +31,14 @@ export type CircomWasmInstance = WebAssembly.Instance & {
 export class CircuitError extends Error {
     constructor(
         public message: string,
-        public options: { errors: string[] } = { errors: [] }
+        public errors: string[],
     ) {
         super(message)
         this.name = "CircuitError"
     }
 
     toString() {
-        return `${this.name}: ${this.message}\n${this.options.errors.join("\n")}`
+        return `${this.name}: ${this.message}\n${this.errors.join("\n")}`
     }
 }
 
@@ -167,9 +167,7 @@ export class WasmWrapper {
     }
 
     exceptionHandler(code) {
-        const error = new CircuitError(ERROR_MESSAGES[code], {
-            errors: this.errorAccumulator
-        })
+        const error = new CircuitError(ERROR_MESSAGES[code], this.errorAccumulator)
 
         this.errorAccumulator = []
 

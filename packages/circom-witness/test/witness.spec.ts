@@ -23,4 +23,23 @@ describe("Witness Execution", async () => {
         assert.equal(accessor.value("main.outAnon"), BigInt(100))
         assert.deepEqual(accessor.array("main.outArray"), [...Array(10).keys()].map((i) => BigInt(i * i)))
     })
+
+    it("Error handling", async () => {
+        const wasmFile = await readFile("test/fixture/test.wasm")
+        const symbolsFile = await readFile("test/fixture/test.sym")
+        const symbols = (new SymbolReader(symbolsFile.toString()).readSymbolMap())
+
+        const calculator = new Witness(wasmFile, symbols)
+        try {
+            await calculator.calculate({
+                "in": 10,
+                "inMustBeOne": 2,
+                "inArray": [...Array(10).keys()],
+            })
+            assert.fail("Should have thrown")
+        } catch(e) {
+            assert.equal(e.message, "Assert Failed")
+            assert.isNotEmpty(e.errors, "Should have errors")
+        }
+    })
 })
