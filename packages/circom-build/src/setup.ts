@@ -26,7 +26,13 @@ export type R1CSDetails = {
 
 export class SnarkJSSetup {
     constructor(
-        public r1cs: string
+        public r1cs: string,
+        public logger: {
+            log: (msg: string) => void,
+            info: (msg: string) => void,
+            error: (msg: string) => void,
+            warn: (msg: string) => void,
+        } = console
     ) {}
 
     get zkey_path(): string {
@@ -45,11 +51,11 @@ export class SnarkJSSetup {
     async phase1(scheme: SnarkScheme, ptau: string): Promise<Uint8Array> {
         switch (scheme) {
             case SnarkScheme.Groth16:
-                return zKey.newZKey(this.r1cs, ptau, this.zkey_path)
+                return zKey.newZKey(this.r1cs, ptau, this.zkey_path, this.logger)
             case SnarkScheme.Plonk:
-                return plonk.plonkSetup(this.r1cs, ptau, this.zkey_path)
+                return plonk.plonkSetup(this.r1cs, ptau, this.zkey_path, this.logger)
             case SnarkScheme.FFlonk:
-                return fflonk.fflonkSetup(this.r1cs, ptau, this.zkey_path)
+                return fflonk.fflonkSetup(this.r1cs, ptau, this.zkey_path, this.logger)
         }
     }
 }
