@@ -20,7 +20,18 @@ export type R1CSDetails = {
 };
 export declare class SnarkJSSetup {
     r1cs: string;
-    constructor(r1cs: string);
+    logger: {
+        log: (msg: string) => void;
+        info: (msg: string) => void;
+        error: (msg: string) => void;
+        warn: (msg: string) => void;
+    };
+    constructor(r1cs: string, logger?: {
+        log: (msg: string) => void;
+        info: (msg: string) => void;
+        error: (msg: string) => void;
+        warn: (msg: string) => void;
+    });
     get zkey_path(): string;
     get r1cs_details(): Promise<R1CSDetails>;
     phase1(scheme: SnarkScheme, ptau: string): Promise<Uint8Array>;
