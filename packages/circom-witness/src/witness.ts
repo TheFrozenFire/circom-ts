@@ -39,10 +39,18 @@ export class WitnessCalculator {
         }, {})
     }
 
-    async calculate(inputs: WitnessInputs, sanityCheck: boolean = false) {
+    async init(sanityCheck: boolean = false) {
         await this.instance.init(sanityCheck);
+    }
+
+    async calculate(inputs: WitnessInputs, sanityCheck: boolean = false) {
+        await this.init(sanityCheck);
 
         this.writeInputs(inputs)
+    }
+
+    get memory(): WebAssembly.Memory {
+        return this.instance.memory
     }
 
     get witness(): bigint[] {
@@ -181,10 +189,19 @@ export class Witness {
 
     constructor(
         protected code:  Uint8Array | Promise<Uint8Array>,
-        protected symbols: SymbolMap
+        protected symbols: SymbolMap,
+        protected logger?: (message: string[]) => void
     ) {
-        this.calculator = new WitnessCalculator(new WasmWrapper(code))
+        this.calculator = new WitnessCalculator(new WasmWrapper(code, logger))
         this.accessor = new WitnessAccessor(this.calculator, symbols)
+    }
+
+    async init(sanityCheck: boolean = false) {
+        await this.calculator.init(sanityCheck);
+    }
+
+    get memory(): WebAssembly.Memory {
+        return this.calculator.memory
     }
 
     async calculate(inputs: object, sanityCheck: boolean = false) {

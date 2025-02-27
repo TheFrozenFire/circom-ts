@@ -53,11 +53,8 @@ export class WasmWrapper {
 
     constructor(
         protected code: Uint8Array | Promise<Uint8Array>,
-        protected memory?: WebAssembly.Memory,
         protected logger: (message: string[]) => void = (messages) => console.log(messages.join(" "))
-    ) {
-        this.memory = memory || new WebAssembly.Memory({ initial: 32767 })
-    }
+    ) { }
 
     static signalNameHash(name: string): [number, number] {
         const uint64_max = BigInt(2**64)
@@ -80,9 +77,6 @@ export class WasmWrapper {
         }
 
         ({ instance: this.instance } = await WebAssembly.instantiate(this.code, {
-            env: {
-                memory: this.memory,
-            },
             runtime: this.runtime
         }) as unknown as { instance: CircomWasmInstance, module: WebAssembly.Module })
 
@@ -98,6 +92,10 @@ export class WasmWrapper {
             writeBufferMessage: this.writeBufferMessage.bind(this),
             showSharedRWMemory: this.showSharedRWMemory.bind(this),
         }
+    }
+
+    get memory(): WebAssembly.Memory {
+        return this.instance.exports.memory
     }
 
     get version(): number {

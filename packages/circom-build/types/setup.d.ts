@@ -18,20 +18,16 @@ export type R1CSDetails = {
     customGatesUses: unknown;
     map: number[];
 };
+export interface SnarkJSSetupLogger {
+    log: (msg: string) => void;
+    info: (msg: string) => void;
+    error: (msg: string) => void;
+    warn: (msg: string) => void;
+}
 export declare class SnarkJSSetup {
     r1cs: string;
-    logger: {
-        log: (msg: string) => void;
-        info: (msg: string) => void;
-        error: (msg: string) => void;
-        warn: (msg: string) => void;
-    };
-    constructor(r1cs: string, logger?: {
-        log: (msg: string) => void;
-        info: (msg: string) => void;
-        error: (msg: string) => void;
-        warn: (msg: string) => void;
-    });
+    logger: SnarkJSSetupLogger;
+    constructor(r1cs: string, logger?: SnarkJSSetupLogger);
     get zkey_path(): string;
     get r1cs_details(): Promise<R1CSDetails>;
     phase1(scheme: SnarkScheme, ptau: string): Promise<Uint8Array>;

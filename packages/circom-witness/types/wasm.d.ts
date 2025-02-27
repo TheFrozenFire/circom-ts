@@ -26,15 +26,20 @@ export type CircomWasmInstance = WebAssembly.Instance & {
         getMessageChar: () => number;
     };
 };
+export declare class CircuitError extends Error {
+    message: string;
+    errors: string[];
+    constructor(message: string, errors: string[]);
+    toString(): string;
+}
 export declare class WasmWrapper {
     protected code: Uint8Array | Promise<Uint8Array>;
-    protected memory?: WebAssembly.Memory;
     protected logger: (message: string[]) => void;
     protected instance: CircomWasmInstance;
     protected errorAccumulator: string[];
     protected messageAccumulator: string[];
     fieldElementUint32Size: number;
-    constructor(code: Uint8Array | Promise<Uint8Array>, memory?: WebAssembly.Memory, logger?: (message: string[]) => void);
+    constructor(code: Uint8Array | Promise<Uint8Array>, logger?: (message: string[]) => void);
     static signalNameHash(name: string): [number, number];
     init(sanityCheck?: boolean): Promise<void>;
     get runtime(): {
@@ -43,6 +48,7 @@ export declare class WasmWrapper {
         writeBufferMessage: any;
         showSharedRWMemory: any;
     };
+    get memory(): WebAssembly.Memory;
     get version(): number;
     get minorVersion(): number;
     get patchVersion(): number;

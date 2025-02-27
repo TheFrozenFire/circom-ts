@@ -10,6 +10,8 @@ describe("Witness Execution", async () => {
         const symbols = (new SymbolReader(symbolsFile.toString()).readSymbolMap())
 
         const calculator = new Witness(wasmFile, symbols)
+        await calculator.init()
+        console.log(calculator.memory.buffer.byteLength)
         const accessor = await calculator.calculate({
             "in": 10,
             "inMustBeOne": 1,
@@ -22,6 +24,8 @@ describe("Witness Execution", async () => {
         assert.equal(accessor.value("main.out"), BigInt(100))
         assert.equal(accessor.value("main.outAnon"), BigInt(100))
         assert.deepEqual(accessor.array("main.outArray"), [...Array(10).keys()].map((i) => BigInt(i * i)))
+
+        console.log("Memory size", calculator.memory.buffer.byteLength)
     })
 
     it("Error handling", async () => {

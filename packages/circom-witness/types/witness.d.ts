@@ -10,7 +10,9 @@ export declare class WitnessCalculator {
     protected instance: WasmWrapper;
     constructor(instance: WasmWrapper);
     static flattenInputs(inputs: object): WitnessInputs;
+    init(sanityCheck?: boolean): Promise<void>;
     calculate(inputs: WitnessInputs, sanityCheck?: boolean): Promise<void>;
+    get memory(): WebAssembly.Memory;
     get witness(): bigint[];
     get witnessBin(): Uint8Array;
     witnessAt(index: number): bigint;
@@ -32,8 +34,11 @@ export declare class WitnessAccessor {
 export declare class Witness {
     protected code: Uint8Array | Promise<Uint8Array>;
     protected symbols: SymbolMap;
+    protected logger?: (message: string[]) => void;
     protected calculator: WitnessCalculator;
     protected accessor: WitnessAccessor;
-    constructor(code: Uint8Array | Promise<Uint8Array>, symbols: SymbolMap);
+    constructor(code: Uint8Array | Promise<Uint8Array>, symbols: SymbolMap, logger?: (message: string[]) => void);
+    init(sanityCheck?: boolean): Promise<void>;
+    get memory(): WebAssembly.Memory;
     calculate(inputs: object, sanityCheck?: boolean): Promise<WitnessAccessor>;
 }
