@@ -24,15 +24,17 @@ export type R1CSDetails = {
     map: number[],
 }
 
+export interface SnarkJSSetupLogger {
+    log: (msg: string) => void,
+    info: (msg: string) => void,
+    error: (msg: string) => void,
+    warn: (msg: string) => void,
+}
+
 export class SnarkJSSetup {
     constructor(
         public r1cs: string,
-        public logger: {
-            log: (msg: string) => void,
-            info: (msg: string) => void,
-            error: (msg: string) => void,
-            warn: (msg: string) => void,
-        } = console
+        public logger: SnarkJSSetupLogger = console
     ) {}
 
     get zkey_path(): string {
