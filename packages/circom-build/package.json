@@ -1,6 +1,6 @@
 {
     "name": "@frozenfire/circom-build",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "type": "module",
     "exports": {
         ".": {
@@ -13,7 +13,7 @@
         "test": "NODE_NO_WARNINGS=1 mocha"
     },
     "dependencies": {
-        "@frozenfire/circom-common": "^0.7.0",
+        "@frozenfire/circom-common": "^0.8.0",
         "r1csfile": "^0.0.47",
         "snarkjs": "^0.6.11"
     },
