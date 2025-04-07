@@ -76,11 +76,11 @@ export class CircomCommand {
                 flags.push("--c");
             }
 
-            if (this.options.optimize) {
+            if (this.options.optimize !== undefined) {
                 flags.push(`--O${this.options.optimize}`);
             }
 
-            if (this.options.optimize2_round) {
+            if (this.options.optimize2_round !== undefined) {
                 flags.push(`--O2round ${this.options.optimize2_round}`);
             }
 

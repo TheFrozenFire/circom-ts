@@ -114,6 +114,12 @@ export class WitnessCalculator {
     }
 
     witnessAt(index: number): bigint {
+        if(index >= this.instance.witnessSize) {
+            throw new Error(`Witness index out of bounds: ${index} >= ${this.instance.witnessSize}`)
+        } else if(index === -1) {
+            throw new Error("Witness index is pruned (-1)")
+        }
+
         return this.instance.witnessAt(index)
     }
 
