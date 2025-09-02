@@ -8,6 +8,7 @@ import { CircomCommand } from "./command.js"
 export class Build {
     public instance: Instance
     public constants: Constants
+    public temp_dir: string
 
     constructor(
         _template_file: string,
@@ -16,28 +17,29 @@ export class Build {
         _pragma?: string,
         _public_inputs?: string[],
         _constants: object = {},
+        _temp_dir?: string,
     ) {
+
+        this.temp_dir = temp.mkdirSync({ dir: _temp_dir })
+
         this.instance = new Instance(
             _template_file,
             _template_name,
             _params,
             _pragma,
             _public_inputs,
+            this.temp_dir,
         )
 
-        this.constants = new Constants(_constants)
+        this.constants = new Constants(_constants, _pragma, this.temp_dir)
     }
 
     async compile(options: object = {}) {
-        const temp_dir = temp.mkdirSync()
-        this.instance.temp_dir = temp_dir
-        this.constants.temp_dir = temp_dir
-
         await this.constants.create()
 
         const command = new CircomCommand(this.instance, Object.assign({
-            output: this.instance.temp_dir,
-            libraries: [pathJoin(process.cwd(), "circuits"), this.instance.temp_dir],
+            output: this.temp_dir,
+            libraries: [pathJoin(process.cwd(), "circuits"), this.temp_dir],
             verbose: false,
             r1cs: true,
             sym: true,
